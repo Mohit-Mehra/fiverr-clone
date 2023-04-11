@@ -33,6 +33,38 @@
       align-items: center;
       font-weight: 500;
       font-family: "Montserrat", sans-serif;
+
+      .user{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        position: relative;
+
+        img{
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+
+        .options{
+          position: absolute;
+          top: 35px;
+          right: 0;
+          padding: 15px;
+          background-color: white;
+          border-radius: 10px;
+          border: 1px solid lightgrey;
+          display: flex;
+          flex-direction: column;
+          gap: 7px;
+          color:gray;
+          width: 160px;
+          font-weight: 300;
+        }
+      }
+
       button {
         color: white;
         padding: 10px;
