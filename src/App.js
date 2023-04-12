@@ -10,6 +10,7 @@ import Add from "./pages/add/Add";
 import Messages from "./pages/messages/Messages";
 import Message from "./pages/message/Message";
 import Footer from "./components/footer/Footer";
+import "./App.scss";
 
 function App() {
   const Layout = () => {
@@ -26,40 +27,40 @@ function App() {
     {
       path: "/",
       element: <Layout />,
-      children:[
+      children: [
         {
-          path:"/",
-          element:<Home />
+          path: "/",
+          element: <Home />,
         },
         {
-          path:"/gigs",
-          element:<Gigs />
+          path: "/gigs",
+          element: <Gigs />,
         },
         {
-          path:"/gig/:id",
-          element:<Gig />
+          path: "/gig/:id",
+          element: <Gig />,
         },
         {
-          path:"/orders",
-          element:<Orders />
+          path: "/orders",
+          element: <Orders />,
         },
         {
-          path:"/mygigs",
-          element:<MyGigs />
+          path: "/mygigs",
+          element: <MyGigs />,
         },
         {
-          path:"/add",
-          element:<Add />
+          path: "/add",
+          element: <Add />,
         },
         {
-          path:"/messages",
-          element:<Messages />
+          path: "/messages",
+          element: <Messages />,
         },
         {
-          path:"/message/:id",
-          element:<Message />
+          path: "/message/:id",
+          element: <Message />,
         },
-      ]
+      ],
     },
   ]);
 
