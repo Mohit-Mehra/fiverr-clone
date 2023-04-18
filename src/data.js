@@ -181,4 +181,13 @@ export const cards = [
       star: 4,
       username: "Wilton Hunt",
     },
+    {
+      id: 9,
+      img: "https://images.pexels.com/photos/5490778/pexels-photo-5490778.jpeg?auto=compress&cs=tinysrgb&w=1600",
+      pp: "https://images.pexels.com/photos/1699159/pexels-photo-1699159.jpeg?auto=compress&cs=tinysrgb&w=1600",
+      desc: "I will create custom art using midjourney generator",
+      price: 110,
+      star: 4,
+      username: "Wilton Hunt",
+    },
   ];
