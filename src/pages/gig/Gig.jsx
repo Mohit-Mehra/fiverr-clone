@@ -224,7 +224,7 @@ const Gig = () => {
         <div className="right">
         <div className="price">
             <h3>1 AI generated image</h3>
-            <h2>$ 59.99</h2>
+            <h2>₹ 600</h2>
           </div>
           <p>
             I will create a unique high quality AI generated image based on a
