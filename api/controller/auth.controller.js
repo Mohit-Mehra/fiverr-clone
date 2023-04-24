@@ -1,8 +1,9 @@
 import jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
 import bcrypt from "bcrypt";
+import createError from "../utils/createError.js";
 
-export const register = async (req, res) => {
+export const register = async (req, res, next) => {
   try {
     const hash = bcrypt.hashSync(req.body.password, 5);
     const newUser = new User({
@@ -13,29 +14,36 @@ export const register = async (req, res) => {
     await newUser.save();
     res.status(201).send("User has been created.");
   } catch (err) {
-    res.status(500).send("Something went wrong!");
+    next(err);
   }
 };
 
-export const login = async (req, res) => {
+export const login = async (req, res, next) => {
   try {
     const user = await User.findOne({ username: req.body.username });
-    if (!user) return res.status(404).send("User not Found!");
+    if (!user) return next(createError(404, "User not found!"));
 
     const isCorrect = bcrypt.compare(req.body.password, user.password);
-    if (!isCorrect) return res.status(400).send("Wrong Password or username!");
+    if (!isCorrect)
+      return next(createError(400, "Wrong Password or username!"));
 
-    const token = jwt.sign({
-      id: user._id,
-      isSeller: user.isSeller,
-    }, process.env.JWT_KEY);
+    const token = jwt.sign(
+      {
+        id: user._id,
+        isSeller: user.isSeller,
+      },
+      process.env.JWT_KEY
+    );
 
     const { password, ...info } = user._doc;
-    res.cookie("accessToken", token,{
-      httpOnly:true
-    }).status(200).send(info);
+    res
+      .cookie("accessToken", token, {
+        httpOnly: true,
+      })
+      .status(200)
+      .send(info);
   } catch (err) {
-    res.status(500).send("Something went wrong!");
+    next(err);
   }
 };
 
