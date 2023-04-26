@@ -11,6 +11,7 @@ import Messages from "./pages/messages/Messages";
 import Message from "./pages/message/Message";
 import Footer from "./components/footer/Footer";
 import "./App.scss";
+import Login from "./pages/login/Login";
 
 function App() {
   const Layout = () => {
@@ -55,6 +56,10 @@ function App() {
         {
           path: "/messages",
           element: <Messages />,
+        },
+        {
+          path: "/login",
+          element: <Login />,
         },
         {
           path: "/message/:id",
