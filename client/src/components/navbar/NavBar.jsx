@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import newRequest from "../../utils/newRequset";
 import "./NavBar.scss";
-import { Link, useLocation } from "react-router-dom";
 
-const NavBar = () => {
+function NavBar() {
   const [active, setActive] = useState(false);
   const [open, setOpen] = useState(false);
+
   const { pathname } = useLocation();
 
   const isActive = () => {
@@ -17,59 +19,78 @@ const NavBar = () => {
       window.removeEventListener("scroll", isActive);
     };
   }, []);
-  const currentUser = {
-    id: 1,
-    username: "Mohit",
-    isSeller: true,
+
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await newRequest.post("/auth/logout");
+      localStorage.setItem("currentUser", null);
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
     <div className={active || pathname !== "/" ? "navbar active" : "navbar"}>
       <div className="container">
         <div className="logo">
-          <Link to="/" className="link">
+          <Link className="link" to="/">
             <span className="text">fiverr</span>
           </Link>
           <span className="dot">.</span>
         </div>
         <div className="links">
-          <span>Fiver Business</span>
+          <span>Fiverr Business</span>
           <span>Explore</span>
           <span>English</span>
           {!currentUser?.isSeller && <span>Become a Seller</span>}
-          <span>Sign in</span>
-          {!currentUser && <button>Join</button>}
-          {currentUser && (
+          {currentUser ? (
             <div className="user" onClick={() => setOpen(!open)}>
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/User_icon-cp.svg/1200px-User_icon-cp.svg.png"
+                src={
+                  currentUser.img ||
+                  "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                }
                 alt=""
               />
               <span>{currentUser?.username}</span>
               {open && (
                 <div className="options">
-                  {currentUser?.isSeller && (
+                  {currentUser.isSeller && (
                     <>
-                      <Link to="/mygigs" className="link">
+                      <Link className="link" to="/mygigs">
                         Gigs
                       </Link>
-                      <Link to="/add" className="link">
+                      <Link className="link" to="/add">
                         Add New Gig
                       </Link>
                     </>
                   )}
-                  <Link to="/orders" className="link">
+                  <Link className="link" to="/orders">
                     Orders
                   </Link>
-                  <Link to="/messages" className="link">
+                  <Link className="link" to="/messages">
                     Messages
                   </Link>
-                  <Link to="/" className="link">
+                  <Link className="link" onClick={handleLogout}>
                     Logout
                   </Link>
                 </div>
               )}
             </div>
+          ) : (
+            <>
+              <Link to="/login" className="link">
+                Sign in
+              </Link>
+              <Link className="link" to="/register">
+                <button>Join</button>
+              </Link>
+            </>
           )}
         </div>
       </div>
@@ -77,31 +98,31 @@ const NavBar = () => {
         <>
           <hr />
           <div className="menu">
-            <Link to="/" className="link">
+            <Link className="link menuLink" to="/">
               Graphics & Design
             </Link>
-            <Link to="/" className="link">
+            <Link className="link menuLink" to="/">
               Video & Animation
             </Link>
-            <Link to="/" className="link">
+            <Link className="link menuLink" to="/">
               Writing & Translation
             </Link>
-            <Link to="/" className="link">
+            <Link className="link menuLink" to="/">
               AI Services
             </Link>
-            <Link to="/" className="link">
+            <Link className="link menuLink" to="/">
               Digital Marketing
             </Link>
-            <Link to="/" className="link">
+            <Link className="link menuLink" to="/">
               Music & Audio
             </Link>
-            <Link to="/" className="link">
+            <Link className="link menuLink" to="/">
               Programming & Tech
             </Link>
-            <Link to="/" className="link">
+            <Link className="link menuLink" to="/">
               Business
             </Link>
-            <Link to="/" className="link">
+            <Link className="link menuLink" to="/">
               Lifestyle
             </Link>
           </div>
@@ -110,6 +131,6 @@ const NavBar = () => {
       )}
     </div>
   );
-};
+}
 
 export default NavBar;
