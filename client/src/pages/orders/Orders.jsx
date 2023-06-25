@@ -1,13 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import newRequest from "../../utils/newRequset";
 import "./Order.scss";
 
 const Orders = () => {
-  const currentUser = {
-    id: 1,
-    username: "Mohit",
-    isSeller: true,
-  };
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const {isLoading,error,data} = useQuery({
+    queryKey: ["orders"],
+    queryFn: () =>
+      newRequest.get(`/orders`).then((res) => {
+        return res.data;
+      }),
+  });
 
   return (
     <div className="orders">
