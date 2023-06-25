@@ -4,6 +4,7 @@ import { Slider } from "infinite-react-carousel/lib";
 import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequset";
+import Reviews from "../../components/reviews/Reviews";
 const Gig = () => {
   const { id } = useParams();
 
@@ -65,7 +66,9 @@ const Gig = () => {
                       .map((item, i) => (
                         <img src="/img/star.png" alt="" key={i} />
                       ))}
-                    <span>{Math.round(data.totalStars / data.startNumber)}</span>
+                    <span>
+                      {Math.round(data.totalStars / data.startNumber)}
+                    </span>
                   </div>
                 )}
               </div>
@@ -137,7 +140,7 @@ const Gig = () => {
                 </div>
               </div>
             )}
-            {/* <Reviews gigId={id} /> */}
+            <Reviews gigId={id} />
           </div>
           <div className="right">
             <div className="price">
